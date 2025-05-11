@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const PORT = process.env.PORT || 3000;
 const db = require('./cores/databases/postgresql')
+const loggerMiddleware = require('./cores/middlewares/logger.middleware')
 //Router
 const metricRouter = require('./modules/metrics/metric.router')
 
@@ -14,6 +15,9 @@ const main = async () => {
 
     app.use(express.json());// Middleware to parse JSON
     app.use(cors())
+    //Logger
+    app.use(loggerMiddleware.requestLogger)
+    app.use(loggerMiddleware.responseLogger)
 
     // Route
     app.use('/metric', metricRouter)

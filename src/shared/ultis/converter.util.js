@@ -19,4 +19,9 @@ function convertTemperature(value, from, to) {
     if (from === '°F') return to === '°C' ? (value - 32) * 5 / 9 : (value - 32) * 5 / 9 + 273.15;
     if (from === '°K') return to === '°C' ? value - 273.15 : (value - 273.15) * 9 / 5 + 32;
     throw new Error('Unsupported temperature conversion');
-  }
+}
+
+module.exports = {
+    convertDistance,
+    convertTemperature
+}

@@ -1,35 +1,43 @@
+const { responseSuccess, responseError } = require('../../shared/ultis/response.util')
+
 const createMetricService = require('./services/create-metric.service');
 const getListMetricService = require('./services/get-list-metric.service');
 const getDetailMetricService = require('./services/get-detail-metric.service');
-const { success, error } = require('../../common/api-response');
 
 exports.createMetric = async (req, res) => {
-    // const err = await validateCreate(req.body);
-    // if (err) return error(res, err, 400);
 
     try {
         const data = await createMetricService.create(req.body);
-        return success(res, data);
+        return responseSuccess(res, data);
     } catch (e) {
-        return error(res, e.message);
+        return responseError(res, e.message);
     }
 };
 
 exports.getDetail = async (req, res) => {
     try {
         const data = await getDetailMetricService.getDetail(Number(req?.params?.id));
-        if (!data) return error(res, 'Metric not found', 404);
-        return success(res, data);
+        if (!data) return responseError(res, `Metric '${req?.params?.id}' not found`, 404);
+        return responseSuccess(res, data);
     } catch (e) {
-        return error(res, e.message);
+        return responseError(res, e.message);
     }
 };
 
 exports.getList = async (req, res) => {
     try {
-        const data = await getListMetricService.getList(req.query);
-        return success(res, data);
+        const result = await getListMetricService.getList(req.query);
+        return responseSuccess(res, {
+            pagination: {
+                totalItems: result.totalItems,
+                totalPages: result.totalPages,
+                pageIndex: result.pageIndex,
+                itemsPerPage: result.itemsPerPage,
+                itemsInPage: result?.items?.length || 0
+            },
+            data: result.items
+        });
     } catch (e) {
-        return error(res, e.message);
+        return responseError(res, e.message);
     }
 };

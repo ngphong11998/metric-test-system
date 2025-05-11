@@ -1,23 +1,33 @@
-const yup = require('yup');
-const { DISTANCE_UNITS, TEMPERATURE_UNITS, METRIC_TYPE } = require('../../../shared/constants/metric.constant');
+const { METRIC_TYPE, DISTANCE_UNITS, TEMPERATURE_UNITS } = require('../../../shared/constants/metric.constant')
 
-const schema = yup.object({
-    type: yup.string().oneOf(Object.values(METRIC_TYPE)).required(),
-    date: yup.date().optional(),
-    value: yup.number().optional(),
-    unit: yup.string().when('type', {
-        is: METRIC_TYPE.DISTANCE,
-        then: yup.string().oneOf(Object.values(DISTANCE_UNITS)),
-        otherwise: yup.string().oneOf(Object.values(TEMPERATURE_UNITS)),
-    }),
-    created_by: yup.number().optional(),
-});
-
-exports.validateCreate = async (body) => {
-    try {
-        await schema.validate(body);
-        return null;
-    } catch (err) {
-        return err.message;
-    }
+const createMetricDto = {
+    type: 'object',
+    required: ['type', 'date', 'value', 'unit'],
+    properties: {
+        type: { type: 'string', enum: Object.values(METRIC_TYPE) },
+        date: { type: 'string', format: 'date-time' }, // 'date' format is also accepted by ajv-formats
+        value: { type: 'number' },
+        unit: { type: 'string' }
+    },
+    allOf: [
+        {
+            if: {
+                properties: { type: { const: METRIC_TYPE.DISTANCE } }
+            },
+            then: {
+                properties: {
+                    unit: { enum: Object.values(DISTANCE_UNITS) }
+                }
+            },
+            else: {
+                properties: {
+                    unit: { enum: Object.values(TEMPERATURE_UNITS) }
+                }
+            }
+        }
+    ]
 };
+
+module.exports = {
+    createMetricDto
+}

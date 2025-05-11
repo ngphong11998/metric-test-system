@@ -4,7 +4,7 @@ const METRIC_TYPE = {
 }
 
 const DISTANCE_UNITS = {
-    METER: 'meter',//Default unit in database
+    METER: 'meter',//Base distance units
     CENTIMETER: 'centimeter',
     INCH: 'inch',
     FEET: 'feet',
@@ -12,7 +12,7 @@ const DISTANCE_UNITS = {
 };
 
 const TEMPERATURE_UNITS = {
-    C: 'C',//°C - Default unit in database
+    C: 'C',//°C - Base temperature units
     F: 'F',//°F
     K: 'K', //°K
 };

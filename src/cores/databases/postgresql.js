@@ -31,7 +31,7 @@ db.connect = async () => {
         // create table
         await migrate.create_schema(pool)
     } catch (error) {
-        console.log(`Connect database error: ${error?.message || JSON.stringify(error)}`)
+        console.error(`Connect database error: ${error?.message || JSON.stringify(error)}`)
         throw new Error(`Connect database error: ${error?.message || JSON.stringify(error)}`)
     }
 }
