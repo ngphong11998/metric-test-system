@@ -16,7 +16,6 @@ module.exports = (schema, type = 'body') => async (req, res, next) => {
         })
 
         addFormats(ajv)
-
         const valid = ajv.addSchema(schema, 'bodySchema').validate('bodySchema', req[type])
 
         if (!valid) {
