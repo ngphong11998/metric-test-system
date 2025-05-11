@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "78fd514e-6d3a-471f-a8e0-94bf4e03cb36",
+		"name": "E-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10748242",
+		"_collection_link": "https://warped-shadow-855281.postman.co/workspace/Lending~29f7c0d7-873d-409c-b5c7-20134a5d876d/collection/10748242-78fd514e-6d3a-471f-a8e0-94bf4e03cb36?action=share&source=collection_link&creator=10748242"
+	},
+	"item": [
+		{
+			"name": "create-metric",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"TEMPERATURE\",\n    \"value\": 100,\n    \"date\": \"2025-04-03T10:00:00Z\",\n    \"unit\":\"F\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/metric/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/metric/list?type=DISTANCE&unit=centimeter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"list"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "DISTANCE"
+						},
+						{
+							"key": "page",
+							"value": "2",
+							"disabled": true
+						},
+						{
+							"key": "disable_paging",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "unit",
+							"value": "centimeter"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getChart",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/metric/chart?type=TEMPERATURE&fromDate=2025-03-01T00:00:00.000Z&toDate=2025-05-01T00:00:00.000Z&unit=F",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"chart"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "TEMPERATURE"
+						},
+						{
+							"key": "fromDate",
+							"value": "2025-03-01T00:00:00.000Z"
+						},
+						{
+							"key": "toDate",
+							"value": "2025-05-01T00:00:00.000Z"
+						},
+						{
+							"key": "unit",
+							"value": "F"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-detail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"type\":\"DISTANCE\",\n \"value\": 100,\n \"unit\": \"meter\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/metric/detail/20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"metric",
+						"detail",
+						"20"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
