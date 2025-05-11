@@ -15,9 +15,8 @@ createMetricShema = async(pool) => {
         CREATE TABLE IF NOT EXISTS metrics (
             id SERIAL PRIMARY KEY,
             type TEXT NOT NULL DEFAULT 'DISTANCE',
-            date DATE DEFAULT CURRENT_DATE,
+            date TIMESTAMPTZ DEFAULT NOW(),
             value REAL,
-            unit TEXT,
             created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
             updated_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
             created_at TIMESTAMPTZ DEFAULT NOW(),

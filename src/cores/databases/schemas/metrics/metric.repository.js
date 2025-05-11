@@ -1,11 +1,11 @@
 const db = require('../../postgresql');
 
-const create = async ({ type, date, value, unit }) => {
+const create = async ({ type, date, value }) => {
     const result = await db.pool.query(
-        `INSERT INTO metrics (type, date, value, unit)
-            VALUES ($1, $2, $3, $4)
+        `INSERT INTO metrics (type, date, value)
+            VALUES ($1, $2, $3)
             RETURNING *`,
-        [type, date, value, unit]
+        [type, date, value]
     );
     return result.rows[0];
 };
@@ -88,8 +88,44 @@ const filter = async (filters = {}, paginate = {}) => {
     };
 };
 
+const getChart = async (filter) => {
+    const { type, fromDate, toDate } = filter
+    let query = `
+            SELECT DISTINCT ON (DATE(date)) 
+                DATE(date) AS date, value
+            FROM metrics
+            WHERE 1=1
+        `;
+    const params = [];
+
+    if (type) {
+        params.push(type);
+        query += ` AND type = $${params.length}`;
+    }
+
+    if (fromDate) {
+        params.push(fromDate);
+        query += ` AND date >= $${params.length}`;
+    }
+
+    if (toDate) {
+        params.push(toDate);
+        query += ` AND date <= $${params.length}`;
+    }
+
+    query += `
+            ORDER BY date DESC
+        `;
+
+    console.log(query)
+
+    const result = await db.pool.query(query, params);
+    return result.rows;
+};
+
 module.exports = {
     create,
     findById,
-    filter
+    filter,
+    getChart
 }

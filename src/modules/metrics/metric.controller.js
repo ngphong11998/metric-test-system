@@ -3,9 +3,9 @@ const { responseSuccess, responseError } = require('../../shared/ultis/response.
 const createMetricService = require('./services/create-metric.service');
 const getListMetricService = require('./services/get-list-metric.service');
 const getDetailMetricService = require('./services/get-detail-metric.service');
+const getChartMetricService = require('./services/chart-metric.service')
 
 exports.createMetric = async (req, res) => {
-
     try {
         const data = await createMetricService.create(req.body);
         return responseSuccess(res, data);
@@ -41,3 +41,12 @@ exports.getList = async (req, res) => {
         return responseError(res, e.message);
     }
 };
+
+exports.getChart = async (req, res) => {
+    try {
+        const data = await getChartMetricService.getChart(req.query);
+        return responseSuccess(res, data);
+    } catch (e) {
+        return responseError(res, e.message)
+    }
+}

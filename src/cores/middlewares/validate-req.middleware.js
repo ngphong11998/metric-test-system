@@ -20,12 +20,12 @@ module.exports = (schema, type = 'body') => async (req, res, next) => {
         const valid = ajv.addSchema(schema, 'bodySchema').validate('bodySchema', req[type])
 
         if (!valid) {
-            responseError(res, 'Input data error', 400)
+            return responseError(res, 'Input data error', 400)
         }
         return next()
 
     } catch (error) {
         console.error('Error data in catch: ' + error?.message || JSON.stringify(error))
-        responseError(res, 'Input data error', 400)
+        return responseError(res, 'Input data error', 400)
     }
 }
