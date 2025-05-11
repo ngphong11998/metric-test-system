@@ -25,6 +25,7 @@ III. Database
 - created_at
 - updated_at 
 
+``
 CREATE TABLE IF NOT EXISTS metrics (
             id SERIAL PRIMARY KEY,
             type TEXT NOT NULL DEFAULT 'DISTANCE',
@@ -35,11 +36,13 @@ CREATE TABLE IF NOT EXISTS metrics (
             created_at TIMESTAMPTZ DEFAULT NOW(),
             updated_at TIMESTAMPTZ DEFAULT NOW()
         );
+``
 
 IV. API:
 1. User should be able to add new metric with: Date, Value, Unit:
 cURL API:
-``
+
+- ``
 curl --location 'http://localhost:3000/metric/create' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -82,7 +85,8 @@ Example body: {
 }
 
 2. User should be able get a List of all Metrics base on the type ( Distance / Temperature):
-``
+
+- ``
 curl --location 'http://localhost:3000/metric/list' \
 --data ''
 ``
@@ -131,7 +135,8 @@ Example URL: http://localhost:3000/metric/list?type=DISTANCE
 }
 
 3. User should be able to get data to draw a chart, which take the latest metric insert for a day, based on the type and specific time period (1 Month, 2 Month)
-``
+
+- ``
 curl --location 'http://localhost:3000/metric/chart' \
 --data ''
 ``
